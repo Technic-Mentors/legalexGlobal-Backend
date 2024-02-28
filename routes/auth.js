@@ -33,7 +33,7 @@ let hardcodedUser = {
 router.post(
   "/signUpUser", async (req, res) => {
     try {
-      const { name, email, schoolName } = req.body;
+      const { name, email, schoolName, number } = req.body;
 
       const checkEmail = await Signup.findOne({ email })
       if (checkEmail) {
@@ -42,6 +42,7 @@ router.post(
       const user = await Signup.create({
         name,
         email,
+        number,
         schoolName
       });
       res.json({ user:user });
