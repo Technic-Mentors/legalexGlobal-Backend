@@ -37,7 +37,7 @@ router.post(
 
       const checkEmail = await Signup.findOne({ email })
       if (checkEmail) {
-        return res.json({ message: "user already exists",user:checkEmail })
+        return res.json({ message: "user already exists", user: checkEmail })
       }
       const user = await Signup.create({
         name,
@@ -45,7 +45,7 @@ router.post(
         number,
         schoolName
       });
-      res.json({ user:user });
+      res.json({ user: user });
     } catch (error) {
       res.status(500).send("Internal error occured");
       console.log(error);
@@ -222,34 +222,49 @@ router.get("/getpost/:slug", async (req, res) => {
   }
 });
 // get post id end
+const createAdmin = async () => {
+  const adminEmail = "info@legalexglobal.co.uk"
+  const adminPassword = "$2b$10$TSiFgY4oS5VnYNd5eZcvfOfh.0/WVGDn.dXq8fyZllIWW1jOTqPXW"
+  const existingUser = await Admin.findOne({ email: adminEmail });
 
-// Route 1: create user using: api/auth/createadmin
-router.post("/createadmin", async (req, res) => {
-  try {
-    const { email } = req.body
-    if (email !== hardcodedUser.email) {
-      return res
-        .status(400)
-        .json({ success: false, error: "invalid credentials" });
-    }
-    // Check if the user already exists
-    const existingUser = await Admin.findOne({ email: hardcodedUser.email });
-
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ success: false, error: "User already exists" });
-    }
-
-    // Create a new user
-    const newUser = await Admin.create(hardcodedUser);
-
-    res.json({ success: true, user: newUser });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Internal server error");
+  if (existingUser) {
+    return;
+  } else {
+    await Admin.create({
+      email: adminEmail,
+      password: adminPassword
+    })
   }
-});
+}
+
+createAdmin()
+// Route 1: create user using: api/auth/createadmin
+// router.post("/createadmin", async (req, res) => {
+//   try {
+//     const { email } = req.body
+//     if (email !== hardcodedUser.email) {
+//       return res
+//         .status(400)
+//         .json({ success: false, error: "invalid credentials" });
+//     }
+//     // Check if the user already exists
+//     const existingUser = await Admin.findOne({ email: hardcodedUser.email });
+
+//     if (existingUser) {
+//       return res
+//         .status(400)
+//         .json({ success: false, error: "User already exists" });
+//     }
+
+//     // Create a new user
+//     const newUser = await Admin.create(hardcodedUser);
+
+//     res.json({ success: true, user: newUser });
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).send("Internal server error");
+//   }
+// });
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
