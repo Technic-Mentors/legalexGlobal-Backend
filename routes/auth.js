@@ -293,11 +293,12 @@ router.post("/login", async (req, res) => {
       { user: { email: user.email } },
       "TechnicSecretKey",
       {
-        expiresIn: "1h", // You can adjust the expiration time
+        expiresIn: "1h", 
       }
     );
 
     res.json({ success: true, token });
+    
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");
