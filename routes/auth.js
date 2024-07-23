@@ -238,33 +238,6 @@ const createAdmin = async () => {
 }
 
 createAdmin()
-// Route 1: create user using: api/auth/createadmin
-// router.post("/createadmin", async (req, res) => {
-//   try {
-//     const { email } = req.body
-//     if (email !== hardcodedUser.email) {
-//       return res
-//         .status(400)
-//         .json({ success: false, error: "invalid credentials" });
-//     }
-//     // Check if the user already exists
-//     const existingUser = await Admin.findOne({ email: hardcodedUser.email });
-
-//     if (existingUser) {
-//       return res
-//         .status(400)
-//         .json({ success: false, error: "User already exists" });
-//     }
-
-//     // Create a new user
-//     const newUser = await Admin.create(hardcodedUser);
-
-//     res.json({ success: true, user: newUser });
-//   } catch (error) {
-//     console.error(error.message);
-//     res.status(500).send("Internal server error");
-//   }
-// });
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -298,7 +271,7 @@ router.post("/login", async (req, res) => {
     );
 
     res.json({ success: true, token });
-    
+
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");

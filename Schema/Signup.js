@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const SignupSchema = new Schema({
+const SignupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -20,4 +19,4 @@ const SignupSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Signup", SignupSchema);
+export default mongoose.model("Signup", SignupSchema);
